@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { HeroCanvas } from "@/components/HeroCanvas";
+import { useSectionStack } from "@/hooks/use-section-stack";
 import {
   Code2, Stethoscope, Briefcase, ShoppingCart, Rocket, BarChart3, Lightbulb, Users,
   MessageCircle, Smartphone, ShieldCheck, HeartPulse, BadgeCheck, Menu, X,
@@ -55,6 +56,7 @@ function Index() {
   const scroller = useRef<HTMLDivElement>(null);
   const [past, setPast] = useState(false);
   const [open, setOpen] = useState(false);
+  useSectionStack(scroller);
 
   useEffect(() => {
     const s = scroller.current;
