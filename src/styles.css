@@ -158,6 +158,7 @@
   --hero: oklch(0.17 0.025 262);
   --hero-foreground: oklch(0.97 0.005 250);
   --hero-muted: oklch(0.75 0.02 255);
+  --shadow-section-stack: 0 -18px 48px -24px oklch(0.17 0.025 262 / 0.32);
 }
 @theme inline {
   --color-emerald: var(--emerald);
@@ -173,19 +174,31 @@
 body { font-family: var(--font-sans); }
 .snap-container {
   height: 100dvh;
-  scroll-snap-type: y mandatory;
+  isolation: isolate;
+  scroll-snap-type: y proximity;
   scroll-behavior: smooth;
   overscroll-behavior-y: contain;
   scrollbar-gutter: stable;
 }
 .snap-section {
   box-sizing: border-box;
+  position: sticky;
+  top: var(--stack-top, 0px);
+  background-color: var(--background);
   min-height: 100dvh;
   padding-top: 6rem;
   padding-bottom: 2rem;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  /* Sticky layers already provide the screen transition. Snapping their
+     moving positions would trap upward anchor navigation. */
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
 }
+.snap-section:nth-of-type(1) { z-index: 1; background-color: var(--hero); }
+.snap-section:nth-of-type(2) { z-index: 2; }
+.snap-section:nth-of-type(3) { z-index: 3; background-color: var(--secondary); }
+.snap-section:nth-of-type(4) { z-index: 4; }
+.snap-section:nth-of-type(5) { z-index: 5; background-color: var(--hero); }
+.snap-section + .snap-section { box-shadow: var(--shadow-section-stack); }
 #inicio > .relative { padding-top: 0; }
 
 /* Keep the complete section in view when space allows; tall content remains
@@ -228,6 +241,7 @@ body { font-family: var(--font-sans); }
 }
 @media (prefers-reduced-motion: reduce) {
   .snap-container { scroll-behavior: auto; }
+  .snap-section { position: relative; top: auto; box-shadow: none; scroll-snap-align: start; }
 }
 .bg-hero-vignette { background: radial-gradient(ellipse at center, oklch(0.17 0.025 262 / 0.55) 0%, transparent 60%), linear-gradient(to top, var(--hero), transparent 30%); }
 .text-gradient { background: linear-gradient(120deg, var(--emerald), oklch(0.85 0.1 170)); -webkit-background-clip: text; background-clip: text; color: transparent; }

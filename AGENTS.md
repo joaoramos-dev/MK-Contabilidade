@@ -9,4 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Keep section snapping native and viewport-aware in the global stylesheet, with header clearance and expandable section heights so short screens never clip content.
+- Keep viewport-aware sticky section layers in the global stylesheet, with header clearance and expandable heights; retain the native proximity snap container but disable panel snap alignment during stacking to avoid sticky-position scroll traps. Reduced motion uses ordinary relative sections with proximity snapping.
+- Use useSectionStack only for section geometry and anchor navigation; compute negative sticky offsets for tall panels so their full content remains reachable without changing Three.js or intercepting wheel/touch input.
