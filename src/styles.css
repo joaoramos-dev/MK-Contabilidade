@@ -158,7 +158,7 @@
   --hero: oklch(0.17 0.025 262);
   --hero-foreground: oklch(0.97 0.005 250);
   --hero-muted: oklch(0.75 0.02 255);
-  --shadow-section-stack: 0 -18px 48px -24px oklch(0.17 0.025 262 / 0.32);
+  --shadow-section-stack: 0 -30px 60px -20px oklch(0.1 0.025 262 / 0.55);
 }
 @theme inline {
   --color-emerald: var(--emerald);
@@ -198,7 +198,18 @@ body { font-family: var(--font-sans); }
 .snap-section:nth-of-type(3) { z-index: 3; background-color: var(--secondary); }
 .snap-section:nth-of-type(4) { z-index: 4; }
 .snap-section:nth-of-type(5) { z-index: 5; background-color: var(--hero); }
-.snap-section + .snap-section { box-shadow: var(--shadow-section-stack); }
+.snap-container { background-color: var(--hero); }
+.snap-section {
+  transform-origin: 50% 0;
+  transform: scale(calc(1 - var(--cover, 0) * 0.06));
+  filter: brightness(calc(1 - var(--cover, 0) * 0.4));
+  will-change: transform, filter;
+}
+.snap-section + .snap-section {
+  border-radius: 2rem 2rem 0 0;
+  box-shadow: var(--shadow-section-stack);
+}
+@media (max-width: 639px) { .snap-section + .snap-section { border-radius: 1.25rem 1.25rem 0 0; } }
 #inicio > .relative { padding-top: 0; }
 
 /* Keep the complete section in view when space allows; tall content remains

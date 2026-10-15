@@ -20,6 +20,24 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
     sections.forEach((section) => observer.observe(section));
     update();
 
+    // Depth effect: how much the next card covers each panel (0..1).
+    let frame = 0;
+    const paint = () => {
+      frame = 0;
+      const h = container.clientHeight;
+      const base = container.getBoundingClientRect().top;
+      sections.forEach((section, i) => {
+        const next = sections[i + 1];
+        const cover = next
+          ? Math.min(1, Math.max(0, (h - (next.getBoundingClientRect().top - base)) / h))
+          : 0;
+        section.style.setProperty("--cover", cover.toFixed(3));
+      });
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(paint); };
+    container.addEventListener("scroll", onScroll, { passive: true });
+    paint();
+
     // Sticky positions aren't the panels' original anchor positions. Use their
     // natural flow heights so navigation also works when returning upward.
     const navigate = (event: MouseEvent) => {
@@ -48,7 +66,12 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
     return () => {
       observer.disconnect();
       container.removeEventListener("click", navigate);
-      sections.forEach((section) => section.style.removeProperty("--stack-top"));
+      container.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+      sections.forEach((section) => {
+        section.style.removeProperty("--stack-top");
+        section.style.removeProperty("--cover");
+      });
     };
   }, [scroller]);
 }
