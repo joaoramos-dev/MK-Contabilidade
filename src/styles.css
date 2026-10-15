@@ -171,8 +171,64 @@
   --font-sans: "DM Sans", system-ui, sans-serif;
 }
 body { font-family: var(--font-sans); }
-.snap-container { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
-.snap-section { min-height: 100svh; scroll-snap-align: start; }
+.snap-container {
+  height: 100dvh;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+}
+.snap-section {
+  box-sizing: border-box;
+  min-height: 100dvh;
+  padding-top: 6rem;
+  padding-bottom: 2rem;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+#inicio > .relative { padding-top: 0; }
+
+/* Keep the complete section in view when space allows; tall content remains
+   naturally scrollable instead of being clipped into a fixed-height panel. */
+@media (max-width: 639px) {
+  .snap-section { padding-top: 5rem; padding-bottom: 1.5rem; }
+  .snap-section h2 { font-size: 1.75rem; line-height: 1.2; }
+  .snap-section .mb-12 { margin-bottom: 1.5rem; }
+  #segmentos .grid { gap: .75rem; }
+  #segmentos .card-premium { padding: 1rem; }
+  #segmentos .icon-tile { float: left; margin: 0 .75rem .5rem 0; }
+  #segmentos .card-premium p { clear: both; }
+  #servicos .bg-card { padding: 1rem; gap: .75rem; }
+  #quem-somos .gap-10 { gap: 1.25rem; }
+  #quem-somos .pt-8 { padding-top: 1rem; }
+  #quem-somos .mt-4 { float: left; margin: .75rem .75rem 0 0; }
+  #quem-somos .mt-5 { margin-top: .75rem; }
+  #quem-somos .mt-2 { clear: both; }
+  .snap-section .cta-box { padding: 1.5rem 0; }
+  .snap-section footer { margin-top: 1.5rem; padding-block: 1rem; }
+}
+@media (max-height: 740px) {
+  .snap-section { padding-top: 5rem; padding-bottom: 1.5rem; }
+  .snap-section h1 { font-size: 2.5rem; line-height: 1.1; }
+  .snap-section h2 { font-size: 2rem; line-height: 1.2; }
+  .snap-section .mb-12 { margin-bottom: 1.5rem; }
+  #inicio .mb-6 { margin-bottom: 1rem; }
+  #inicio .mt-6 { margin-top: 1rem; }
+  #inicio .mt-10 { margin-top: 1.5rem; }
+  #inicio .mt-8 { margin-top: 1rem; }
+  #segmentos .grid { gap: .75rem; }
+  #segmentos .card-premium { padding: 1rem; }
+  #segmentos .icon-tile { margin-bottom: 1rem; }
+  #servicos .bg-card { padding: 1.25rem; }
+  #quem-somos .gap-10 { gap: 1.5rem; }
+  #quem-somos .pt-8 { padding-top: 1rem; }
+  #quem-somos .mt-5 { margin-top: 1rem; }
+  .snap-section .cta-box { padding: 1.5rem; }
+  .snap-section footer { margin-top: 1.5rem; padding-block: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .snap-container { scroll-behavior: auto; }
+}
 .bg-hero-vignette { background: radial-gradient(ellipse at center, oklch(0.17 0.025 262 / 0.55) 0%, transparent 60%), linear-gradient(to top, var(--hero), transparent 30%); }
 .text-gradient { background: linear-gradient(120deg, var(--emerald), oklch(0.85 0.1 170)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .btn-cta { display: inline-flex; align-items: center; gap: .6rem; border-radius: 999px; font-weight: 600; background: var(--emerald-strong); color: oklch(0.99 0 0); box-shadow: 0 10px 30px -10px color-mix(in oklab, var(--emerald) 70%, transparent); transition: transform .25s, box-shadow .25s, background .25s; }
