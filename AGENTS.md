@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep section snapping native and viewport-aware in the global stylesheet, with header clearance and expandable section heights so short screens never clip content.
