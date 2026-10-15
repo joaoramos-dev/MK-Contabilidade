@@ -24,29 +24,29 @@ export const Route = createFileRoute("/")({
 });
 
 const segments = [
-  { icon: Code2, t: "TI & Programadores", d: "Imposto reduzido para devs, exportação de serviços e PJs." },
-  { icon: Stethoscope, t: "Saúde & Clínicas", d: "Médicos, psicólogos, dentistas e clínicas estruturadas." },
-  { icon: Briefcase, t: "Prestadores de Serviços", d: "Consultorias, agências, engenharia e representação." },
-  { icon: ShoppingCart, t: "Comércio & E-commerce", d: "Emissão de NF, gestão de estoque e tributação." },
+  { icon: Code2, t: "TI & Programadores", d: "PJs e exportação de serviços." },
+  { icon: Stethoscope, t: "Saúde & Clínicas", d: "Médicos, dentistas e psicólogos." },
+  { icon: Briefcase, t: "Prestadores de Serviços", d: "Consultorias, agências e engenharia." },
+  { icon: ShoppingCart, t: "Comércio & E-commerce", d: "Notas fiscais e tributação." },
 ];
 const services = [
-  { icon: Rocket, t: "Abertura e Migração de CNPJ", d: "Transição simples sem travar sua operação." },
-  { icon: BarChart3, t: "Gestão Fiscal e Contábil", d: "Emissão de guias, balancetes e obrigações no prazo." },
-  { icon: Lightbulb, t: "Planejamento Tributário", d: "Enquadramento no Simples Nacional ou Lucro Presumido para pagar o menor imposto legal." },
-  { icon: Users, t: "Folha de Pagamento & Pró-labore", d: "Gestão de funcionários e distribuição de lucros isenta." },
+  { icon: Rocket, t: "Abertura e Migração de CNPJ", d: "Abertura · Regularização · Migração" },
+  { icon: BarChart3, t: "Gestão Fiscal e Contábil", d: "Guias · Balancetes · Obrigações fiscais" },
+  { icon: Lightbulb, t: "Planejamento Tributário", d: "Enquadramento · Revisão de impostos" },
+  { icon: Users, t: "Folha & Pró-labore", d: "Folha de pagamento · Pró-labore · Lucros" },
 ];
 const reasons = [
-  { icon: MessageCircle, t: "Atendimento Direto com Contador", d: "Nada de abrir ticket e esperar 3 dias. Resposta rápida via WhatsApp." },
-  { icon: Smartphone, t: "100% Digital e Seguro", d: "Envie e receba documentos pelo celular de onde estiver." },
-  { icon: HeartPulse, t: "Foco na Saúde Financeira", d: "Garantimos que sua empresa fique 100% regular com a Receita Federal." },
+  { icon: MessageCircle, t: "Contato direto", d: "Converse com seu contador pelo WhatsApp." },
+  { icon: Smartphone, t: "Digital e seguro", d: "Documentos acessíveis onde você estiver." },
+  { icon: HeartPulse, t: "Empresa em dia", d: "Acompanhamento das obrigações fiscais." },
 ];
 const nav = [["Início", "#inicio"], ["Quem Somos", "#quem-somos"], ["Serviços", "#servicos"], ["Segmentos", "#segmentos"]];
 
 function SectionTitle({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) {
   return (
-    <div className="mx-auto mb-12 max-w-3xl text-center">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-emerald">{eyebrow}</p>
-      <h2 className="font-display text-3xl font-semibold tracking-tight text-foreground md:text-5xl">{children}</h2>
+    <div className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
+      <p className="mb-4 text-sm font-medium tracking-normal text-muted-foreground">{eyebrow}</p>
+      <h2 className="font-display text-3xl font-semibold leading-tight tracking-normal text-foreground md:text-4xl">{children}</h2>
     </div>
   );
 }
@@ -68,7 +68,7 @@ function Index() {
     <div ref={scroller} className="snap-container h-svh overflow-y-auto bg-background">
       <header className="fixed inset-x-0 top-0 z-40 border-b border-hairline bg-nav backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
-          <a href="#inicio" className="font-display text-lg tracking-tight text-hero-foreground">
+          <a href="#inicio" className="font-display text-lg tracking-normal text-hero-foreground">
             <span className="font-bold">MK</span> <span className="font-light text-hero-muted">Contabilidade</span>
           </a>
           <nav className="hidden gap-8 md:flex">
@@ -102,19 +102,19 @@ function Index() {
         <HeroCanvas />
         <div className="pointer-events-none absolute inset-0 bg-hero-vignette" />
         <div className="relative z-10 mx-auto max-w-4xl px-5 pt-16 text-center">
-          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-hairline bg-glass px-4 py-1.5 text-xs text-hero-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald" /> Contabilidade digital para todo o Brasil
+          <p className="mb-6 text-sm text-hero-muted">
+            <span className="hidden" /> Contabilidade digital para todo o Brasil
           </p>
-          <h1 className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-hero-foreground md:text-6xl lg:text-7xl">
-            Contabilidade Completa, Digital e Inteligente para a Sua Empresa <span className="text-gradient">Prosperar</span>
+          <h1 className="font-display text-4xl font-semibold leading-tight tracking-normal text-hero-foreground md:text-6xl lg:text-7xl">
+            MK <span className="text-hero-foreground">Contabilidade</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base text-hero-muted md:text-lg">
-            A MK Contabilidade cuida da abertura de empresas, gestão fiscal, planejamento tributário e folha de pagamento. Atendimento humanizado com especialista no CRC, sem burocracia e para todo o Brasil.
+          <p className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-hero-muted md:mt-8 md:text-lg">
+            Da abertura do CNPJ à gestão contábil, cuide da sua empresa com um contador próximo.
           </p>
-          <a href={WA} target="_blank" rel="noreferrer" className="btn-cta pointer-events-auto mt-10 px-6 py-4 text-sm md:px-8 md:text-base">
-            <Smartphone className="h-5 w-5" /> Solicitar Orçamento Sem Compromisso no WhatsApp
+          <a href={WA} target="_blank" rel="noreferrer" className="btn-cta pointer-events-auto mt-10 !rounded-md px-6 py-4 text-sm !shadow-none hover:!translate-y-0 hover:!shadow-none md:px-8 md:text-base">
+            <Smartphone className="h-5 w-5" /> Solicitar orçamento
           </a>
-          <div className="mt-8 flex flex-wrap justify-center gap-2">
+          <div className="hidden">
             {["CRC Ativo", "Atendimento Humano", "Economia Tributária"].map((b) => (
               <span key={b} className="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-glass px-3 py-1 text-xs text-hero-muted">
                 <BadgeCheck className="h-3.5 w-3.5 text-emerald" /> {b}
@@ -127,13 +127,13 @@ function Index() {
       {/* SEGMENTOS */}
       <section id="segmentos" className="snap-section flex items-center px-5 py-24">
         <div className="mx-auto w-full max-w-7xl">
-          <SectionTitle eyebrow="Segmentos">Soluções Especializadas para o Seu Modelo de Negócio</SectionTitle>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <SectionTitle eyebrow="Segmentos">Contabilidade para o seu negócio</SectionTitle>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {segments.map(({ icon: I, t, d }) => (
-              <div key={t} className="card-premium group p-7">
-                <div className="icon-tile mb-6"><I className="h-6 w-6" /></div>
+              <div key={t} className="card-premium !rounded-md p-8 !shadow-none hover:!translate-y-0 hover:!border-border hover:!shadow-none">
+                <div className="icon-tile mb-6 !rounded-none !bg-transparent"><I className="h-6 w-6" /></div>
                 <h3 className="font-display text-lg font-semibold text-foreground">{t}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:mt-4">{d}</p>
               </div>
             ))}
           </div>
@@ -143,14 +143,14 @@ function Index() {
       {/* SERVIÇOS */}
       <section id="servicos" className="snap-section flex items-center bg-secondary px-5 py-24">
         <div className="mx-auto w-full max-w-5xl">
-          <SectionTitle eyebrow="Serviços">Tudo o que sua empresa precisa em um só lugar</SectionTitle>
-          <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-2">
+          <SectionTitle eyebrow="Serviços">O essencial para sua empresa</SectionTitle>
+          <div className="grid gap-x-12 gap-y-6 md:grid-cols-2">
             {services.map(({ icon: I, t, d }) => (
-              <div key={t} className="flex gap-5 bg-card p-7 md:p-9">
-                <div className="icon-tile shrink-0"><I className="h-6 w-6" /></div>
-                <div>
+              <div key={t} className="flex gap-5 border-t border-border bg-card !bg-transparent px-0 py-8 md:gap-6">
+                <div className="icon-tile shrink-0 !rounded-none !bg-transparent"><I className="h-6 w-6" /></div>
+                <div className="min-w-0">
                   <h3 className="font-display text-lg font-semibold text-foreground">{t}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{d}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{d}</p>
                 </div>
               </div>
             ))}
@@ -161,14 +161,14 @@ function Index() {
       {/* DIFERENCIAIS */}
       <section id="quem-somos" className="snap-section flex items-center px-5 py-24">
         <div className="mx-auto w-full max-w-6xl">
-          <SectionTitle eyebrow="Diferenciais">Por que os empresários fecham com a MK Contabilidade?</SectionTitle>
-          <div className="grid gap-10 md:grid-cols-3">
+          <SectionTitle eyebrow="Diferenciais">Mais perto da sua empresa</SectionTitle>
+          <div className="grid gap-10 md:grid-cols-3 md:gap-16">
             {reasons.map(({ icon: I, t, d }, i) => (
               <div key={t} className="border-t border-border pt-8">
-                <span className="font-display text-sm text-emerald">0{i + 1}</span>
+                <span className="hidden">0{i + 1}</span>
                 <I className="mt-4 h-8 w-8 text-primary" />
                 <h3 className="mt-5 font-display text-xl font-semibold text-foreground">{t}</h3>
-                <p className="mt-2 leading-relaxed text-muted-foreground">{d}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:mt-4">{d}</p>
               </div>
             ))}
           </div>
@@ -178,13 +178,13 @@ function Index() {
       {/* CTA + FOOTER */}
       <section className="snap-section flex flex-col bg-hero px-5 pt-24">
         <div className="flex flex-1 items-center">
-          <div className="cta-box mx-auto w-full max-w-4xl p-10 text-center md:p-16">
-            <ShieldCheck className="mx-auto h-10 w-10 text-emerald" />
-            <h2 className="mt-6 font-display text-3xl font-semibold tracking-tight text-hero-foreground md:text-5xl">
-              Pronto para simplificar a contabilidade do seu negócio com a MK Contabilidade?
+          <div className="cta-box mx-auto w-full max-w-3xl !rounded-none !border-0 !bg-none !bg-transparent p-10 text-center md:p-16">
+            <ShieldCheck className="hidden" />
+            <h2 className="mt-6 font-display text-3xl font-semibold leading-tight tracking-normal text-hero-foreground md:text-4xl">
+              Vamos cuidar da sua contabilidade?
             </h2>
-            <a href={WA} target="_blank" rel="noreferrer" className="btn-cta mt-10 px-8 py-4 text-base">
-              <MessageCircle className="h-5 w-5" /> Iniciar Conversa no WhatsApp Agora
+            <a href={WA} target="_blank" rel="noreferrer" className="btn-cta mt-10 !rounded-md px-8 py-4 text-base !shadow-none hover:!translate-y-0 hover:!shadow-none">
+              <MessageCircle className="h-5 w-5" /> Falar com contador
             </a>
           </div>
         </div>
