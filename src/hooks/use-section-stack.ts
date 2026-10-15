@@ -40,7 +40,8 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
         top,
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
       });
-      window.history.replaceState(null, "", `#${id}`);
+      // Leave URL management to the router: writing a hash here triggers its
+      // scroll restoration against the sticky (rather than natural) position.
     };
     container.addEventListener("click", navigate);
 
