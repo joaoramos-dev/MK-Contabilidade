@@ -69,8 +69,8 @@ function Index() {
   return (
     <div ref={scroller} className="snap-container h-svh overflow-y-auto bg-background">
       <header className="fixed inset-x-0 top-0 z-40 border-b border-hairline bg-nav backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
-          <a href="#inicio" className="font-display text-lg tracking-normal text-hero-foreground">
+        <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-5 md:flex md:justify-between">
+          <a href="#inicio" className="min-w-0 truncate whitespace-nowrap font-display text-base tracking-normal text-hero-foreground sm:text-lg">
             <span className="font-bold">MK</span> <span className="font-light text-hero-muted">Contabilidade</span>
           </a>
           <nav className="hidden gap-8 md:flex">
@@ -78,9 +78,11 @@ function Index() {
               <a key={h} href={h} className="text-sm text-hero-muted transition-colors hover:text-hero-foreground">{l}</a>
             ))}
           </nav>
-          <div className="flex items-center gap-2">
-            <a href={WA} target="_blank" rel="noreferrer" className="btn-cta hidden px-4 py-2 text-sm sm:inline-flex">
-              <MessageCircle className="h-4 w-4" /> Falar com Contador
+          <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+            <a href={WA} target="_blank" rel="noreferrer" aria-label="Falar com Contador" className="btn-cta whitespace-nowrap px-3 py-2 text-sm sm:px-4">
+              <MessageCircle className="h-4 w-4 shrink-0" />
+              <span className="hidden min-[400px]:inline">Falar com Contador</span>
+              <span className="min-[400px]:hidden">Contador</span>
             </a>
             <button onClick={() => setOpen(!open)} className="p-2 text-hero-foreground md:hidden" aria-label="Menu">
               {open ? <X /> : <Menu />}
