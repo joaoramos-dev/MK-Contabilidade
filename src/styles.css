@@ -159,6 +159,7 @@
   --hero-foreground: oklch(0.97 0.005 250);
   --hero-muted: oklch(0.75 0.02 255);
   --shadow-section-stack: 0 -30px 60px -20px oklch(0.1 0.025 262 / 0.55);
+  --shadow-section-stack-mobile: 0 -14px 32px -6px oklch(0.1 0.025 262 / 0.7), 0 -1px 0 oklch(1 0 0 / 0.5);
 }
 @theme inline {
   --color-emerald: var(--emerald);
@@ -200,16 +201,30 @@ body { font-family: var(--font-sans); }
 .snap-section:nth-of-type(5) { z-index: 5; background-color: var(--hero); }
 .snap-container { background-color: var(--hero); }
 .snap-section {
-  transform-origin: 50% 0;
-  transform: scale(calc(1 - var(--cover, 0) * 0.06));
-  filter: brightness(calc(1 - var(--cover, 0) * 0.4));
+  --recede: 0.06;
+  --dim: 0.4;
+  /* Pivot on the visible part of the panel, also when tall panels stick with a negative top. */
+  transform-origin: 50% calc(100% - 50dvh);
+  transform: scale(calc(1 - var(--cover, 0) * var(--recede)));
+  filter: brightness(calc(1 - var(--cover, 0) * var(--dim)));
   will-change: transform, filter;
 }
 .snap-section + .snap-section {
   border-radius: 2rem 2rem 0 0;
   box-shadow: var(--shadow-section-stack);
 }
-@media (max-width: 639px) { .snap-section + .snap-section { border-radius: 1.25rem 1.25rem 0 0; } }
+@media (max-width: 639px) {
+  .snap-section { --recede: 0.1; --dim: 0.3; }
+  .snap-section + .snap-section {
+    border-radius: 1.5rem 1.5rem 0 0;
+    box-shadow: var(--shadow-section-stack-mobile);
+  }
+  /* Small handle makes each incoming card read as a separate layer. */
+  .snap-section + .snap-section::before {
+    content: ""; position: absolute; top: .6rem; left: 50%; width: 2.5rem; height: .25rem;
+    transform: translateX(-50%); border-radius: 999px; background: var(--border);
+  }
+}
 #inicio > .relative { padding-top: 0; }
 
 /* Keep the complete section in view when space allows; tall content remains
