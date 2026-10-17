@@ -56,7 +56,8 @@ function Index() {
   const scroller = useRef<HTMLDivElement>(null);
   const [past, setPast] = useState(false);
   const [open, setOpen] = useState(false);
-  useSectionStack(scroller);
+  const active = useSectionStack(scroller);
+  const pages = ["inicio", "segmentos", "servicos", "quem-somos", "contato"];
 
   useEffect(() => {
     const s = scroller.current;

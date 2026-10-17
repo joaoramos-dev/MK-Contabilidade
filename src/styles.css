@@ -176,8 +176,9 @@ body { font-family: var(--font-sans); }
 .snap-container {
   height: 100dvh;
   isolation: isolate;
-  scroll-snap-type: y proximity;
-  scroll-behavior: smooth;
+  /* Paging is driven by useSectionStack; native snap/smooth would fight it. */
+  scroll-snap-type: none;
+  scroll-behavior: auto;
   overscroll-behavior-y: contain;
   scrollbar-gutter: stable;
 }
@@ -189,8 +190,6 @@ body { font-family: var(--font-sans); }
   min-height: 100dvh;
   padding-top: 6rem;
   padding-bottom: 2rem;
-  /* Sticky layers already provide the screen transition. Snapping their
-     moving positions would trap upward anchor navigation. */
   scroll-snap-align: none;
   scroll-snap-stop: normal;
 }
@@ -200,31 +199,16 @@ body { font-family: var(--font-sans); }
 .snap-section:nth-of-type(4) { z-index: 4; }
 .snap-section:nth-of-type(5) { z-index: 5; background-color: var(--hero); }
 .snap-container { background-color: var(--hero); }
-.snap-section {
-  --recede: 0.06;
-  --dim: 0.4;
-  /* Pivot on the visible part of the panel, also when tall panels stick with a negative top. */
-  transform-origin: 50% calc(100% - 50dvh);
-  transform: scale(calc(1 - var(--cover, 0) * var(--recede)));
-  filter: brightness(calc(1 - var(--cover, 0) * var(--dim)));
-  will-change: transform, filter;
+/* Cinematic parallax: the covered panel drifts up at ~30% speed and fades. */
+.snap-section > * {
+  transform: translate3d(0, calc(var(--cover, 0) * -30dvh), 0);
+  opacity: calc(1 - var(--cover, 0) * 0.85);
+  will-change: transform, opacity;
 }
-.snap-section + .snap-section {
-  border-radius: 2rem 2rem 0 0;
-  box-shadow: var(--shadow-section-stack);
-}
-@media (max-width: 639px) {
-  .snap-section { --recede: 0.1; --dim: 0.3; }
-  .snap-section + .snap-section {
-    border-radius: 1.5rem 1.5rem 0 0;
-    box-shadow: var(--shadow-section-stack-mobile);
-  }
-  /* Small handle makes each incoming card read as a separate layer. */
-  .snap-section + .snap-section::before {
-    content: ""; position: absolute; top: .6rem; left: 50%; width: 2.5rem; height: .25rem;
-    transform: translateX(-50%); border-radius: 999px; background: var(--border);
-  }
-}
+.page-dots { position: fixed; right: 1.25rem; top: 50%; transform: translateY(-50%); z-index: 50; display: flex; flex-direction: column; gap: .75rem; }
+.page-dots a { width: .5rem; height: .5rem; border-radius: 999px; background: var(--muted-foreground); opacity: .4; transition: all .5s cubic-bezier(0.16, 1, 0.3, 1); }
+.page-dots a[aria-current="true"] { height: 1.5rem; opacity: 1; background: var(--primary); }
+@media (max-width: 639px) { .page-dots { right: .5rem; } }
 #inicio > .relative { padding-top: 0; }
 
 /* Keep the complete section in view when space allows; tall content remains
