@@ -82,7 +82,7 @@ function Index() {
             <a href={WA} target="_blank" rel="noreferrer" aria-label="Falar com Contador" className="btn-cta whitespace-nowrap px-3 py-2 text-sm sm:px-4">
               <MessageCircle className="h-4 w-4 shrink-0" />
               <span className="hidden min-[400px]:inline">Falar com Contador</span>
-              <span className="min-[400px]:hidden">Contador</span>
+              <span className="hidden min-[360px]:inline min-[400px]:hidden">Contador</span>
             </a>
             <button onClick={() => setOpen(!open)} className="p-2 text-hero-foreground md:hidden" aria-label="Menu">
               {open ? <X /> : <Menu />}
