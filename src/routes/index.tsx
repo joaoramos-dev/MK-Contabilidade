@@ -69,6 +69,11 @@ function Index() {
 
   return (
     <div ref={scroller} className="snap-container h-svh overflow-y-auto bg-background">
+      <nav className="page-dots" aria-label="Seções">
+        {pages.map((id, i) => (
+          <a key={id} href={`#${id}`} aria-label={`Ir para seção ${i + 1}`} aria-current={active === i} />
+        ))}
+      </nav>
       <header className="fixed inset-x-0 top-0 z-40 border-b border-hairline bg-nav backdrop-blur-xl">
         <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-5 md:flex md:justify-between">
           <a href="#inicio" className="min-w-0 truncate whitespace-nowrap font-display text-base tracking-normal text-hero-foreground sm:text-lg">
@@ -181,7 +186,7 @@ function Index() {
       </section>
 
       {/* CTA + FOOTER */}
-      <section className="snap-section flex flex-col bg-hero px-5 pt-24">
+      <section id="contato" className="snap-section flex flex-col bg-hero px-5 pt-24">
         <div className="flex flex-1 items-center">
           <div className="cta-box mx-auto w-full max-w-3xl !rounded-none !border-0 !bg-none !bg-transparent p-10 text-center md:p-16">
             <ShieldCheck className="hidden" />
