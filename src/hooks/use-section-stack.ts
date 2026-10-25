@@ -63,7 +63,7 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
     const current = () => {
       const y = container.scrollTop;
       let best = 0;
-      stops.forEach((s, i) => { if (Math.abs(s.top - y) < Math.abs(stops[best].top - y)) best = i; });
+      stops.forEach((s, i) => { if (Math.abs(s.top - y) < Math.abs(stops[best]!.top - y)) best = i; });
       return best;
     };
     const animateTo = (top: number, index: number) => {
@@ -87,7 +87,7 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
     const go = (dir: 1 | -1) => {
       if (busy) return;
       const i = Math.max(0, Math.min(stops.length - 1, current() + dir));
-      animateTo(stops[i].top, stops[i].index);
+      animateTo(stops[i]!.top, stops[i]!.index);
     };
 
     let lastWheel = 0;
@@ -103,11 +103,11 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
     };
 
     let touchY: number | null = null;
-    const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0].clientY; };
+    const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0]?.clientY ?? null; };
     const onTouchMove = (e: TouchEvent) => { if (!reduced) e.preventDefault(); };
     const onTouchEnd = (e: TouchEvent) => {
       if (reduced || touchY === null) return;
-      const dy = touchY - e.changedTouches[0].clientY;
+      const dy = touchY - (e.changedTouches[0]?.clientY ?? touchY);
       touchY = null;
       if (Math.abs(dy) > 40) go(dy > 0 ? 1 : -1);
     };
@@ -132,10 +132,10 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
       if (index < 0) return;
       event.preventDefault();
       busy = false;
-      animateTo(starts[index], index);
+      animateTo(starts[index] ?? 0, index);
     };
 
-    const syncActive = () => { if (!busy && stops.length) setActive(stops[current()].index); };
+    const syncActive = () => { if (!busy && stops.length) setActive(stops[current()]!.index); };
     container.addEventListener("scroll", syncActive, { passive: true });
     container.addEventListener("wheel", onWheel, { passive: false });
     container.addEventListener("touchstart", onTouchStart, { passive: true });
