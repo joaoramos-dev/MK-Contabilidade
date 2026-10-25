@@ -9,5 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Keep viewport-aware sticky section layers in the global stylesheet, with header clearance and expandable heights; retain the native proximity snap container but disable panel snap alignment during stacking to avoid sticky-position scroll traps. Reduced motion uses ordinary relative sections with proximity snapping.
-- Use useSectionStack only for section geometry and anchor navigation; compute negative sticky offsets for tall panels so their full content remains reachable without changing Three.js or intercepting wheel/touch input.
+- Keep viewport-aware sticky section layers in the global stylesheet, with header clearance and expandable heights; native snap and smooth scroll are off because JS paging drives scrolling. Reduced motion uses ordinary relative sections with proximity snapping.
+- useSectionStack owns section geometry and discrete paging (wheel/touch/keys/anchors move one screen per gesture with an eased, locked transition); why: user wants each gesture to lock onto the next screen. Never touch Three.js.
