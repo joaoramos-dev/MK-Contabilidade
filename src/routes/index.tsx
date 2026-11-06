@@ -6,8 +6,7 @@ import {
   Code2, Stethoscope, Briefcase, ShoppingCart, Rocket, BarChart3, Lightbulb, Users,
   MessageCircle, Smartphone, ShieldCheck, HeartPulse, BadgeCheck, Menu, X,
 } from "lucide-react";
-
-const WA = "https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20um%20contador.";
+import { CRC, PHONE_LABEL, PHONE_TEL, WA } from "@/lib/contact";
 
 export const Route = createFileRoute("/")({
   ssr: false,
@@ -202,12 +201,13 @@ function Index() {
           <div className="grid gap-4 md:grid-cols-3">
             <div>
               <p className="font-display text-base text-hero-foreground"><b>MK</b> Contabilidade</p>
-              <p className="mt-1">MK Serviços Contábeis Ltda · CNPJ 00.000.000/0001-00</p>
-              <p>CRC 000000/O-0</p>
+              <p className="mt-1">{CRC}</p>
             </div>
             <div>
-              <p>contato@mkcontabilidade.com.br</p>
-              <p>(00) 00000-0000</p>
+              <p>WhatsApp · Telefone</p>
+              <p className="mt-1">
+                <a href={PHONE_TEL} className="hover:text-hero-foreground">{PHONE_LABEL}</a>
+              </p>
             </div>
             <div className="md:text-right">
               <a href="#" className="hover:text-hero-foreground">Política de Privacidade</a>
