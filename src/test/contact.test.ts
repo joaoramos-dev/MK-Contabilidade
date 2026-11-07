@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { CRC, PHONE_LABEL, PHONE_TEL, WA } from "@/lib/contact";
+import { CRC, EMAIL, MAILTO, PHONE_LABEL, PHONE_TEL, WA } from "@/lib/contact";
 
 describe("Contato da MK Contabilidade", () => {
   it("abre o WhatsApp no número (21) 97367-8068", () => {
@@ -14,5 +14,10 @@ describe("Contato da MK Contabilidade", () => {
 
   it("mostra apenas o CRC RJ-140722/0 no rodapé", () => {
     expect(CRC).toBe("CRC RJ-140722/0");
+  });
+
+  it("mostra o e-mail contato@mksolucoescontabeis.com no rodapé", () => {
+    expect(EMAIL).toBe("contato@mksolucoescontabeis.com");
+    expect(MAILTO).toBe("mailto:contato@mksolucoescontabeis.com");
   });
 });
