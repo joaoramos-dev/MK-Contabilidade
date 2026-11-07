@@ -6,7 +6,7 @@ import {
   Code2, Stethoscope, Briefcase, ShoppingCart, Rocket, BarChart3, Lightbulb, Users,
   MessageCircle, Smartphone, ShieldCheck, HeartPulse, BadgeCheck, Menu, X,
 } from "lucide-react";
-import { CRC, PHONE_LABEL, PHONE_TEL, WA } from "@/lib/contact";
+import { CRC, EMAIL, MAILTO, PHONE_LABEL, PHONE_TEL, WA } from "@/lib/contact";
 
 export const Route = createFileRoute("/")({
   ssr: false,
@@ -198,7 +198,7 @@ function Index() {
           </div>
         </div>
         <footer className="mx-auto mt-16 w-full max-w-7xl border-t border-hairline py-8 text-sm text-hero-muted">
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-4">
             <div>
               <p className="font-display text-base text-hero-foreground"><b>MK</b> Contabilidade</p>
               <p className="mt-1">{CRC}</p>
@@ -207,6 +207,12 @@ function Index() {
               <p>WhatsApp · Telefone</p>
               <p className="mt-1">
                 <a href={PHONE_TEL} className="hover:text-hero-foreground">{PHONE_LABEL}</a>
+              </p>
+            </div>
+            <div>
+              <p>E-mail</p>
+              <p className="mt-1">
+                <a href={MAILTO} className="break-all hover:text-hero-foreground">{EMAIL}</a>
               </p>
             </div>
             <div className="md:text-right">
