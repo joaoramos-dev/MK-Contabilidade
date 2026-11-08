@@ -207,7 +207,8 @@ body { font-family: var(--font-sans); }
 }
 .page-dots { position: fixed; right: 1.25rem; top: 50%; transform: translateY(-50%); z-index: 50; display: flex; flex-direction: column; gap: .75rem; }
 .page-dots a { width: .5rem; height: .5rem; border-radius: 999px; background: var(--muted-foreground); opacity: .4; transition: all .5s cubic-bezier(0.16, 1, 0.3, 1); }
-.page-dots a[aria-current="true"] { height: 1.5rem; opacity: 1; background: var(--primary); }
+.page-dots a[aria-current="location"] { height: 1.5rem; opacity: 1; background: var(--primary); }
+.page-dots a:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; opacity: 1; }
 @media (max-width: 639px) { .page-dots { right: .5rem; } }
 #inicio > .relative { padding-top: 0; }
 
@@ -222,11 +223,11 @@ body { font-family: var(--font-sans); }
   #segmentos .icon-tile { float: left; margin: 0 .75rem .5rem 0; }
   #segmentos .card-premium p { clear: both; }
   #servicos .bg-card { padding: 1rem; gap: .75rem; }
-  #quem-somos .gap-10 { gap: 1.25rem; }
-  #quem-somos .pt-8 { padding-top: 1rem; }
-  #quem-somos .mt-4 { float: left; margin: .75rem .75rem 0 0; }
-  #quem-somos .mt-5 { margin-top: .75rem; }
-  #quem-somos .mt-2 { clear: both; }
+  #diferenciais .gap-10 { gap: 1.25rem; }
+  #diferenciais .pt-8 { padding-top: 1rem; }
+  #diferenciais .mt-4 { float: left; margin: .75rem .75rem 0 0; }
+  #diferenciais .mt-5 { margin-top: .75rem; }
+  #diferenciais .mt-2 { clear: both; }
   .snap-section .cta-box { padding: 1.5rem 0; }
   .snap-section footer { margin-top: 1.5rem; padding-block: 1rem; }
 }
@@ -243,9 +244,9 @@ body { font-family: var(--font-sans); }
   #segmentos .card-premium { padding: 1rem; }
   #segmentos .icon-tile { margin-bottom: 1rem; }
   #servicos .bg-card { padding: 1.25rem; }
-  #quem-somos .gap-10 { gap: 1.5rem; }
-  #quem-somos .pt-8 { padding-top: 1rem; }
-  #quem-somos .mt-5 { margin-top: 1rem; }
+  #diferenciais .gap-10 { gap: 1.5rem; }
+  #diferenciais .pt-8 { padding-top: 1rem; }
+  #diferenciais .mt-5 { margin-top: 1rem; }
   .snap-section .cta-box { padding: 1.5rem; }
   .snap-section footer { margin-top: 1.5rem; padding-block: 1rem; }
 }

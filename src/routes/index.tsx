@@ -3,8 +3,21 @@ import { useEffect, useRef, useState } from "react";
 import { HeroCanvas } from "@/components/HeroCanvas";
 import { useSectionStack } from "@/hooks/use-section-stack";
 import {
-  Code2, Stethoscope, Briefcase, ShoppingCart, Rocket, BarChart3, Lightbulb, Users,
-  MessageCircle, Smartphone, ShieldCheck, HeartPulse, BadgeCheck, Menu, X,
+  Code2,
+  Stethoscope,
+  Briefcase,
+  ShoppingCart,
+  Rocket,
+  BarChart3,
+  Lightbulb,
+  Users,
+  MessageCircle,
+  Smartphone,
+  ShieldCheck,
+  HeartPulse,
+  BadgeCheck,
+  Menu,
+  X,
 } from "lucide-react";
 import { CRC, EMAIL, MAILTO, PHONE_LABEL, PHONE_TEL, WA } from "@/lib/contact";
 
@@ -13,9 +26,16 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "MK Contabilidade — Contabilidade Digital e Inteligente" },
-      { name: "description", content: "Abertura de empresas, gestão fiscal, planejamento tributário e folha de pagamento. Atendimento humanizado para todo o Brasil." },
+      {
+        name: "description",
+        content:
+          "Abertura de empresas, gestão fiscal, planejamento tributário e folha de pagamento. Atendimento humanizado para todo o Brasil.",
+      },
       { property: "og:title", content: "MK Contabilidade — Contabilidade Digital e Inteligente" },
-      { property: "og:description", content: "Contabilidade completa, digital e humanizada para sua empresa prosperar." },
+      {
+        property: "og:description",
+        content: "Contabilidade completa, digital e humanizada para sua empresa prosperar.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -36,27 +56,53 @@ const services = [
   { icon: Users, t: "Folha & Pró-labore", d: "Folha de pagamento · Pró-labore · Lucros" },
 ];
 const reasons = [
-  { icon: MessageCircle, t: "Contato direto", d: "Converse com seu contador pelo WhatsApp." },
-  { icon: Smartphone, t: "Digital e seguro", d: "Documentos acessíveis onde você estiver." },
-  { icon: HeartPulse, t: "Empresa em dia", d: "Acompanhamento das obrigações fiscais." },
+  {
+    icon: MessageCircle,
+    t: "Contato direto",
+    d: "Fale com um contador pelo WhatsApp sobre as necessidades da sua empresa.",
+  },
+  {
+    icon: Smartphone,
+    t: "Acesso digital",
+    d: "Consulte seus documentos de forma digital, onde estiver.",
+  },
+  {
+    icon: HeartPulse,
+    t: "Acompanhamento fiscal",
+    d: "Acompanhamento das obrigações fiscais da sua empresa.",
+  },
 ];
-const nav = [["Início", "#inicio"], ["Quem Somos", "#quem-somos"], ["Serviços", "#servicos"], ["Segmentos", "#segmentos"]];
+const nav = [
+  ["Início", "#inicio"],
+  ["Segmentos", "#segmentos"],
+  ["Serviços", "#servicos"],
+  ["Diferenciais", "#diferenciais"],
+];
+const pages = [
+  { id: "inicio", label: "Início" },
+  { id: "segmentos", label: "Segmentos" },
+  { id: "servicos", label: "Serviços" },
+  { id: "diferenciais", label: "Diferenciais" },
+  { id: "contato", label: "Contato" },
+];
 
 function SectionTitle({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) {
   return (
     <div className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
       <p className="mb-4 text-sm font-medium tracking-normal text-muted-foreground">{eyebrow}</p>
-      <h2 className="font-display text-3xl font-semibold leading-tight tracking-normal text-foreground md:text-4xl">{children}</h2>
+      <h2 className="font-display text-3xl font-semibold leading-tight tracking-normal text-foreground md:text-4xl">
+        {children}
+      </h2>
     </div>
   );
 }
 
 function Index() {
   const scroller = useRef<HTMLDivElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const [past, setPast] = useState(false);
   const [open, setOpen] = useState(false);
   const active = useSectionStack(scroller);
-  const pages = ["inicio", "segmentos", "servicos", "quem-somos", "contato"];
 
   useEffect(() => {
     const s = scroller.current;
@@ -66,48 +112,112 @@ function Index() {
     return () => s.removeEventListener("scroll", f);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      menuButton.current?.focus();
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
+
   return (
     <div ref={scroller} className="snap-container h-svh overflow-y-auto bg-background">
       <nav className="page-dots" aria-label="Seções">
-        {pages.map((id, i) => (
-          <a key={id} href={`#${id}`} aria-label={`Ir para seção ${i + 1}`} aria-current={active === i} />
+        {pages.map(({ id, label }, i) => (
+          <a
+            key={id}
+            href={`#${id}`}
+            aria-label={`Ir para ${label}`}
+            aria-current={active === i ? "location" : undefined}
+            title={label}
+          />
         ))}
       </nav>
       <header className="fixed inset-x-0 top-0 z-40 border-b border-hairline bg-nav backdrop-blur-xl">
         <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-5 md:flex md:justify-between">
-          <a href="#inicio" className="min-w-0 truncate whitespace-nowrap font-display text-base tracking-normal text-hero-foreground sm:text-lg">
-            <span className="font-bold">MK</span> <span className="font-light text-hero-muted">Contabilidade</span>
+          <a
+            href="#inicio"
+            className="min-w-0 truncate whitespace-nowrap font-display text-base tracking-normal text-hero-foreground sm:text-lg"
+          >
+            <span className="font-bold">MK</span>{" "}
+            <span className="font-light text-hero-muted">Contabilidade</span>
           </a>
           <nav className="hidden gap-8 md:flex">
             {nav.map(([l, h]) => (
-              <a key={h} href={h} className="text-sm text-hero-muted transition-colors hover:text-hero-foreground">{l}</a>
+              <a
+                key={h}
+                href={h}
+                className="text-sm text-hero-muted transition-colors hover:text-hero-foreground"
+              >
+                {l}
+              </a>
             ))}
           </nav>
           <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-            <a href={WA} target="_blank" rel="noreferrer" aria-label="Falar com Contador" className="btn-cta whitespace-nowrap px-3 py-2 text-sm sm:px-4">
+            <a
+              href={WA}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Falar com Contador"
+              className="btn-cta whitespace-nowrap px-3 py-2 text-sm sm:px-4"
+            >
               <MessageCircle className="h-4 w-4 shrink-0" />
               <span className="hidden min-[400px]:inline">Falar com Contador</span>
               <span className="hidden min-[360px]:inline min-[400px]:hidden">Contador</span>
             </a>
-            <button onClick={() => setOpen(!open)} className="p-2 text-hero-foreground md:hidden" aria-label="Menu">
+            <button
+              ref={menuButton}
+              onClick={() => setOpen((isOpen) => !isOpen)}
+              className="p-2 text-hero-foreground md:hidden"
+              aria-label={open ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
+            >
               {open ? <X /> : <Menu />}
             </button>
           </div>
-        </div>
-        {open && (
-          <nav className="flex flex-col gap-1 border-t border-hairline px-5 py-3 md:hidden">
+          <nav
+            id="mobile-navigation"
+            aria-label="Navegação mobile"
+            className={`${open ? "flex" : "hidden"} flex-col gap-1 border-t border-hairline px-5 py-3 md:hidden`}
+          >
             {nav.map(([l, h]) => (
-              <a key={h} href={h} onClick={() => setOpen(false)} className="py-2 text-hero-muted">{l}</a>
+              <a
+                key={h}
+                href={h}
+                onClick={() => {
+                  setOpen(false);
+                  menuButton.current?.focus();
+                }}
+                className="py-2 text-hero-muted"
+              >
+                {l}
+              </a>
             ))}
-            <a href={WA} target="_blank" rel="noreferrer" className="btn-cta mt-2 justify-center px-4 py-3 text-sm">
+            <a
+              href={WA}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => {
+                setOpen(false);
+                menuButton.current?.focus();
+              }}
+              className="btn-cta mt-2 justify-center px-4 py-3 text-sm"
+            >
               <MessageCircle className="h-4 w-4" /> Falar com Contador
             </a>
           </nav>
-        )}
+        </div>
       </header>
 
       {/* HERO */}
-      <section id="inicio" className="snap-section relative flex items-center justify-center overflow-hidden bg-hero">
+      <section
+        id="inicio"
+        className="snap-section relative flex items-center justify-center overflow-hidden bg-hero"
+      >
         <HeroCanvas />
         <div className="pointer-events-none absolute inset-0 bg-hero-vignette" />
         <div className="relative z-10 mx-auto max-w-4xl px-5 pt-16 text-center">
@@ -120,12 +230,20 @@ function Index() {
           <p className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-hero-muted md:mt-8 md:text-lg">
             Da abertura do CNPJ à gestão contábil, cuide da sua empresa com um contador próximo.
           </p>
-          <a href={WA} target="_blank" rel="noreferrer" className="btn-cta pointer-events-auto mt-10 !rounded-md px-6 py-4 text-sm !shadow-none hover:!translate-y-0 hover:!shadow-none md:px-8 md:text-base">
+          <a
+            href={WA}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-cta pointer-events-auto mt-10 !rounded-md px-6 py-4 text-sm !shadow-none hover:!translate-y-0 hover:!shadow-none md:px-8 md:text-base"
+          >
             <Smartphone className="h-5 w-5" /> Solicitar orçamento
           </a>
           <div className="hidden">
             {["CRC Ativo", "Atendimento Humano", "Economia Tributária"].map((b) => (
-              <span key={b} className="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-glass px-3 py-1 text-xs text-hero-muted">
+              <span
+                key={b}
+                className="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-glass px-3 py-1 text-xs text-hero-muted"
+              >
                 <BadgeCheck className="h-3.5 w-3.5 text-emerald" /> {b}
               </span>
             ))}
@@ -139,8 +257,13 @@ function Index() {
           <SectionTitle eyebrow="Segmentos">Contabilidade para o seu negócio</SectionTitle>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {segments.map(({ icon: I, t, d }) => (
-              <div key={t} className="card-premium !rounded-md p-8 !shadow-none hover:!translate-y-0 hover:!border-border hover:!shadow-none">
-                <div className="icon-tile mb-6 !rounded-none !bg-transparent"><I className="h-6 w-6" /></div>
+              <div
+                key={t}
+                className="card-premium !rounded-md p-8 !shadow-none hover:!translate-y-0 hover:!border-border hover:!shadow-none"
+              >
+                <div className="icon-tile mb-6 !rounded-none !bg-transparent">
+                  <I className="h-6 w-6" />
+                </div>
                 <h3 className="font-display text-lg font-semibold text-foreground">{t}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:mt-4">{d}</p>
               </div>
@@ -155,8 +278,13 @@ function Index() {
           <SectionTitle eyebrow="Serviços">O essencial para sua empresa</SectionTitle>
           <div className="grid gap-x-12 gap-y-6 md:grid-cols-2">
             {services.map(({ icon: I, t, d }) => (
-              <div key={t} className="flex gap-5 border-t border-border bg-card !bg-transparent px-0 py-8 md:gap-6">
-                <div className="icon-tile shrink-0 !rounded-none !bg-transparent"><I className="h-6 w-6" /></div>
+              <div
+                key={t}
+                className="flex gap-5 border-t border-border bg-card !bg-transparent px-0 py-8 md:gap-6"
+              >
+                <div className="icon-tile shrink-0 !rounded-none !bg-transparent">
+                  <I className="h-6 w-6" />
+                </div>
                 <div className="min-w-0">
                   <h3 className="font-display text-lg font-semibold text-foreground">{t}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{d}</p>
@@ -168,7 +296,7 @@ function Index() {
       </section>
 
       {/* DIFERENCIAIS */}
-      <section id="quem-somos" className="snap-section flex items-center px-5 py-24">
+      <section id="diferenciais" className="snap-section flex items-center px-5 py-24">
         <div className="mx-auto w-full max-w-6xl">
           <SectionTitle eyebrow="Diferenciais">Mais perto da sua empresa</SectionTitle>
           <div className="grid gap-10 md:grid-cols-3 md:gap-16">
@@ -192,7 +320,12 @@ function Index() {
             <h2 className="mt-6 font-display text-3xl font-semibold leading-tight tracking-normal text-hero-foreground md:text-4xl">
               Vamos cuidar da sua contabilidade?
             </h2>
-            <a href={WA} target="_blank" rel="noreferrer" className="btn-cta mt-10 !rounded-md px-8 py-4 text-base !shadow-none hover:!translate-y-0 hover:!shadow-none">
+            <a
+              href={WA}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-cta mt-10 !rounded-md px-8 py-4 text-base !shadow-none hover:!translate-y-0 hover:!shadow-none"
+            >
               <MessageCircle className="h-5 w-5" /> Falar com contador
             </a>
           </div>
@@ -200,23 +333,31 @@ function Index() {
         <footer className="mx-auto mt-16 w-full max-w-7xl border-t border-hairline py-8 text-sm text-hero-muted">
           <div className="grid gap-4 md:grid-cols-4">
             <div>
-              <p className="font-display text-base text-hero-foreground"><b>MK</b> Contabilidade</p>
+              <p className="font-display text-base text-hero-foreground">
+                <b>MK</b> Contabilidade
+              </p>
               <p className="mt-1">{CRC}</p>
             </div>
             <div>
               <p>WhatsApp · Telefone</p>
               <p className="mt-1">
-                <a href={PHONE_TEL} className="hover:text-hero-foreground">{PHONE_LABEL}</a>
+                <a href={PHONE_TEL} className="hover:text-hero-foreground">
+                  {PHONE_LABEL}
+                </a>
               </p>
             </div>
             <div>
               <p>E-mail</p>
               <p className="mt-1">
-                <a href={MAILTO} className="break-all hover:text-hero-foreground">{EMAIL}</a>
+                <a href={MAILTO} className="break-all hover:text-hero-foreground">
+                  {EMAIL}
+                </a>
               </p>
             </div>
             <div className="md:text-right">
-              <a href="#" className="hover:text-hero-foreground">Política de Privacidade</a>
+              <a href="/politica-de-privacidade" className="hover:text-hero-foreground">
+                Política de Privacidade
+              </a>
               <p className="mt-1">© {new Date().getFullYear()} MK Contabilidade</p>
             </div>
           </div>

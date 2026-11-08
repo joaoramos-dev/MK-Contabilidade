@@ -14,4 +14,12 @@ describe("App routing", () => {
 
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
+
+  it("matches the privacy policy route", () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+
+    const matches = router.matchRoutes("/politica-de-privacidade");
+
+    expect(matches.at(-1)?.routeId).toBe("/politica-de-privacidade");
+  });
 });
