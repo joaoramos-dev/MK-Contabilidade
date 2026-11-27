@@ -156,7 +156,7 @@ function Index() {
         ))}
       </nav>
       <header className="fixed inset-x-0 top-0 z-40 border-b border-hairline bg-nav backdrop-blur-xl">
-        <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-5 md:flex md:justify-between">
+        <div className="relative mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-5 md:flex md:justify-between">
           <a
             href="#inicio"
             className="min-w-0 truncate whitespace-nowrap font-display text-base tracking-normal text-hero-foreground sm:text-lg"
@@ -190,7 +190,7 @@ function Index() {
             <button
               ref={menuButton}
               onClick={() => setOpen((isOpen) => !isOpen)}
-              className="p-2 text-hero-foreground md:hidden"
+              className="grid min-h-11 min-w-11 place-items-center rounded-sm text-hero-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:hidden"
               aria-label={open ? "Fechar menu" : "Abrir menu"}
               aria-expanded={open}
               aria-controls="mobile-navigation"
@@ -201,7 +201,7 @@ function Index() {
           <nav
             id="mobile-navigation"
             aria-label="Navegação mobile"
-            className={`${open ? "flex" : "hidden"} flex-col gap-1 border-t border-hairline px-5 py-3 md:hidden`}
+            className={`${open ? "flex" : "hidden"} absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-4rem)] flex-col gap-1 overflow-y-auto overscroll-contain border-y border-hairline bg-nav px-5 py-3 shadow-lg backdrop-blur-xl md:hidden`}
           >
             {nav.map(([l, h]) => (
               <a
@@ -211,7 +211,7 @@ function Index() {
                   setOpen(false);
                   menuButton.current?.focus();
                 }}
-                className="py-2 text-hero-muted"
+                className="flex min-h-11 items-center text-hero-muted"
               >
                 {l}
               </a>

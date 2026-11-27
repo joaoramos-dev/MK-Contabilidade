@@ -1,6 +1,7 @@
 import { useEffect, useState, type RefObject } from "react";
 
 const DURATION = 850;
+const TOUCH_DURATION = 560;
 // Approximates cubic-bezier(0.16, 1, 0.3, 1) (Apple-style decelerate).
 const ease = (t: number) => 1 - Math.pow(1 - t, 4);
 
@@ -15,6 +16,7 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
     const container = scroller.current;
     if (!container) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const duration = window.matchMedia("(pointer: coarse)").matches ? TOUCH_DURATION : DURATION;
     const sections = Array.from(container.querySelectorAll<HTMLElement>(".snap-section"));
 
     // Natural (flow) top of each section, plus intermediate stops for tall panels.
@@ -60,6 +62,8 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
     // --- Discrete paging ---
     let busy = false;
     let anim = 0;
+    let queuedTouchDirection: 1 | -1 | 0 = 0;
+    let touchStart: { id: number; x: number; y: number; time: number } | null = null;
     const current = () => {
       const y = container.scrollTop;
       let best = 0;
@@ -77,15 +81,25 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
       cancelAnimationFrame(anim);
       const t0 = performance.now();
       const step = (now: number) => {
-        const t = Math.min(1, (now - t0) / DURATION);
+        const t = Math.min(1, (now - t0) / duration);
         container.scrollTop = from + (to - from) * ease(t);
         if (t < 1) anim = requestAnimationFrame(step);
-        else busy = false;
+        else {
+          busy = false;
+          if (queuedTouchDirection) {
+            const direction = queuedTouchDirection;
+            queuedTouchDirection = 0;
+            go(direction);
+          }
+        }
       };
       anim = requestAnimationFrame(step);
     };
-    const go = (dir: 1 | -1) => {
-      if (busy) return;
+    const go = (dir: 1 | -1, queueIfBusy = false) => {
+      if (busy) {
+        if (queueIfBusy && !queuedTouchDirection) queuedTouchDirection = dir;
+        return;
+      }
       const i = Math.max(0, Math.min(stops.length - 1, current() + dir));
       animateTo(stops[i]!.top, stops[i]!.index);
     };
@@ -102,14 +116,49 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
       go(e.deltaY > 0 ? 1 : -1);
     };
 
-    let touchY: number | null = null;
-    const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0]?.clientY ?? null; };
-    const onTouchMove = (e: TouchEvent) => { if (!reduced) e.preventDefault(); };
+    const onTouchStart = (e: TouchEvent) => {
+      if (
+        e.touches.length !== 1 ||
+        (e.target instanceof Element && e.target.closest("#mobile-navigation"))
+      ) {
+        touchStart = null;
+        return;
+      }
+      const touch = e.touches[0];
+      if (!touch) return;
+      touchStart = {
+        id: touch.identifier,
+        x: touch.clientX,
+        y: touch.clientY,
+        time: performance.now(),
+      };
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (reduced || !touchStart) return;
+      const touch = Array.from(e.touches).find((item) => item.identifier === touchStart?.id);
+      if (!touch) return;
+      const dx = touch.clientX - touchStart.x;
+      const dy = touch.clientY - touchStart.y;
+      if (Math.abs(dy) >= Math.abs(dx)) e.preventDefault();
+    };
     const onTouchEnd = (e: TouchEvent) => {
-      if (reduced || touchY === null) return;
-      const dy = touchY - (e.changedTouches[0]?.clientY ?? touchY);
-      touchY = null;
-      if (Math.abs(dy) > 40) go(dy > 0 ? 1 : -1);
+      if (!touchStart) return;
+      const start = touchStart;
+      touchStart = null;
+      if (reduced) return;
+      const touch = Array.from(e.changedTouches).find((item) => item.identifier === start.id);
+      if (!touch) return;
+      const dx = touch.clientX - start.x;
+      const dy = start.y - touch.clientY;
+      const distance = Math.abs(dy);
+      const elapsed = performance.now() - start.time;
+      const quickFlick = distance >= 18 && elapsed <= 220 && distance / elapsed >= 0.45;
+      if ((distance >= 36 || quickFlick) && distance > Math.abs(dx) * 1.15) {
+        go(dy > 0 ? 1 : -1, true);
+      }
+    };
+    const onTouchCancel = () => {
+      touchStart = null;
     };
 
     const onKey = (e: KeyboardEvent) => {
@@ -141,6 +190,7 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
     container.addEventListener("touchstart", onTouchStart, { passive: true });
     container.addEventListener("touchmove", onTouchMove, { passive: false });
     container.addEventListener("touchend", onTouchEnd);
+    container.addEventListener("touchcancel", onTouchCancel);
     window.addEventListener("keydown", onKey);
     document.addEventListener("click", navigate);
 
@@ -152,6 +202,7 @@ export function useSectionStack(scroller: RefObject<HTMLDivElement | null>) {
       container.removeEventListener("touchstart", onTouchStart);
       container.removeEventListener("touchmove", onTouchMove);
       container.removeEventListener("touchend", onTouchEnd);
+      container.removeEventListener("touchcancel", onTouchCancel);
       window.removeEventListener("keydown", onKey);
       document.removeEventListener("click", navigate);
       cancelAnimationFrame(frame);
