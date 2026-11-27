@@ -74,11 +74,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "MK Contabilidade" },
-      { name: "description", content: "Contabilidade digital MK" },
+      { title: "MK Contabilidade | Contabilidade Digital para Empresas" },
+      {
+        name: "description",
+        content:
+          "Contabilidade digital para empresas e profissionais de todo o Brasil. Abertura de CNPJ, gestão fiscal e planejamento tributário.",
+      },
       { name: "author", content: "MK Contabilidade" },
-      { property: "og:title", content: "MK Contabilidade" },
-      { property: "og:description", content: "Contabilidade digital MK" },
+      { property: "og:title", content: "MK Contabilidade | Contabilidade Digital para Empresas" },
+      {
+        property: "og:description",
+        content:
+          "Contabilidade digital para empresas e profissionais de todo o Brasil. Abertura de CNPJ, gestão fiscal e planejamento tributário.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

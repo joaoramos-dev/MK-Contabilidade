@@ -22,22 +22,41 @@ import {
 import { CRC, EMAIL, MAILTO, PHONE_LABEL, PHONE_TEL, WA } from "@/lib/contact";
 
 export const Route = createFileRoute("/")({
-  ssr: false,
   head: () => ({
     meta: [
-      { title: "MK Contabilidade — Contabilidade Digital e Inteligente" },
+      { title: "MK Contabilidade | Contabilidade Digital para Empresas" },
       {
         name: "description",
         content:
-          "Abertura de empresas, gestão fiscal, planejamento tributário e folha de pagamento. Atendimento humanizado para todo o Brasil.",
+          "Contabilidade digital para empresas e profissionais de todo o Brasil. Abertura de CNPJ, gestão fiscal e planejamento tributário.",
       },
-      { property: "og:title", content: "MK Contabilidade — Contabilidade Digital e Inteligente" },
+      { property: "og:title", content: "MK Contabilidade | Contabilidade Digital para Empresas" },
       {
         property: "og:description",
-        content: "Contabilidade completa, digital e humanizada para sua empresa prosperar.",
+        content:
+          "Contabilidade digital para empresas e profissionais de todo o Brasil. Abertura de CNPJ, gestão fiscal e planejamento tributário.",
       },
+      { property: "og:url", content: "https://www.mksolucoescontabeis.com/" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: "https://www.mksolucoescontabeis.com/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://www.mksolucoescontabeis.com/#organization",
+          name: "MK Contabilidade",
+          url: "https://www.mksolucoescontabeis.com/",
+          email: "contato@mksolucoescontabeis.com",
+          telephone: "+5521973678068",
+          areaServed: { "@type": "Country", name: "Brasil" },
+          description:
+            "Contabilidade digital para empresas e profissionais de todo o Brasil, com abertura de CNPJ, gestão fiscal e planejamento tributário.",
+        }),
+      },
     ],
   }),
   component: Index,

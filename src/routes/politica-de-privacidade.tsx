@@ -12,6 +12,19 @@ export const Route = createFileRoute("/politica-de-privacidade")({
         content:
           "Saiba como a MK Contabilidade trata os dados relacionados ao uso deste site e aos contatos iniciados por seus visitantes.",
       },
+      { property: "og:title", content: "Política de Privacidade | MK Contabilidade" },
+      {
+        property: "og:description",
+        content:
+          "Saiba como a MK Contabilidade trata os dados relacionados ao uso deste site e aos contatos iniciados por seus visitantes.",
+      },
+      {
+        property: "og:url",
+        content: "https://www.mksolucoescontabeis.com/politica-de-privacidade",
+      },
+    ],
+    links: [
+      { rel: "canonical", href: "https://www.mksolucoescontabeis.com/politica-de-privacidade" },
     ],
   }),
   component: PrivacyPolicy,
